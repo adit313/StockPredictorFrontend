@@ -8,6 +8,7 @@ import {
     Header,
     Image,
     Icon,
+    Input,
     List,
     Menu,
     Segment,
@@ -37,34 +38,43 @@ import {
               <List link inverted>
                 <List.Item as='a'>
 
-                    <Button animated>
-                        <Button.Content visible>AMZN</Button.Content>
-                        <Button.Content hidden> $1846.84 </Button.Content>
+                    <Button animated size="medium">
+                        <Button.Content visible>Amazon</Button.Content>
+                        <Button.Content  hidden> <h5>AMZN</h5> </Button.Content>
+                    </Button>
+
+                </List.Item>
+                <List.Item as='a'>
+
+                    <Button animated toggle >
+                        <Button.Content visible>Apple</Button.Content>
+                        <Button.Content hidden> AAPL </Button.Content>
                     </Button>
 
                 </List.Item>
                 <List.Item as='a'>
 
                     <Button animated>
-                        <Button.Content visible>AAPL</Button.Content>
-                        <Button.Content hidden> $130.63 </Button.Content>
+                        <Button.Content visible>Google</Button.Content>
+                        <Button.Content hidden> GOOG</Button.Content>
                     </Button>
 
                 </List.Item>
+
                 <List.Item as='a'>
 
                     <Button animated>
-                        <Button.Content visible>GOOG</Button.Content>
-                        <Button.Content hidden> $1034.34 </Button.Content>
+                        <Button.Content visible>Add Stock</Button.Content>
+                        <Button.Content hidden> <Input style={{ marginLeft: '4px', marginBottom: '7px', color: "white"}} transparent placeholder='Ticker' /> </Button.Content>
                     </Button>
 
-                </List.Item>
+                    </List.Item>
               </List>
             </Grid.Column>
             <Grid.Column width={12}>
                     <Main/>
             </Grid.Column>
-            <Grid.Column width={2}>
+            <Grid.Column width={1}>
                 <Header style={{ marginTop: '4em' }} inverted as='h4' content='Group 1' />
                 <List link inverted>
                     <List.Item as='a'>
