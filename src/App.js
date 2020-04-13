@@ -16,23 +16,33 @@ import {
   Segment,
 } from 'semantic-ui-react'
 
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+
+
 import FixedMenuLayout from './FixedMenuLayout';
 
 export default function App() {
   return (
-    <div className="App">
-      <p>
-      <Menu fixed='top' inverted>
-        <Container>
-          <Menu.Item as='a' header>
-            Stock Puppies
-          </Menu.Item>
-          <Menu.Item as='a'>Login</Menu.Item>
-        </Container>
-      </Menu>
+    <Router>
+      <div className="App">
+        <p>
+        <Menu fixed='top' inverted>
+          <Container>
+            <Menu.Item as='a' header>
+              Stock Puppies
+            </Menu.Item>
+            <Menu.Item as='a'>Login</Menu.Item>
+          </Container>
+        </Menu>
 
-          <FixedMenuLayout />
-        </p>
-    </div>
+            <FixedMenuLayout />
+          </p>
+      </div>
+    </Router>
   );
 }
