@@ -30,18 +30,24 @@ export default function App() {
   return (
     <Router>
       <div className="App">
-        <p>
+      <nav>
         <Menu fixed='top' inverted>
           <Container>
-            <Menu.Item as='a' header>
+            <Menu.Item as={Link} to="/" header>
               Stock Puppies
             </Menu.Item>
-            <Menu.Item as='a'>Login</Menu.Item>
+            <Menu.Item as={Link} to="/login">Login</Menu.Item>
           </Container>
         </Menu>
+        </nav>
 
+        <Switch>
+          <Route path="/login">
+            </Route>
+          <Route path="/">
             <FixedMenuLayout />
-          </p>
+          </Route>
+        </Switch>
       </div>
     </Router>
   );
