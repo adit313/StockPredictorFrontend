@@ -35,7 +35,7 @@ export default class Main extends React.Component {
       <div className="Chart">
         <VictoryChart 
         width={'700'}
-        height = {'300'}
+        height = {'400'}
         animate={{ duration: 500}}
         theme={VictoryTheme.material}
           domainPadding= {30} >
@@ -59,6 +59,9 @@ export default class Main extends React.Component {
                 x={"quarter"} 
                 y={"earnings"}/>
         </VictoryChart>
+        <br/>
+        <br/>
+        <br/>
         <br/>
         <br/>
         <button icon="like" onClick={this.changeState}>Change</button>

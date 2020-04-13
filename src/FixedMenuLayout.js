@@ -17,15 +17,7 @@ import {
   
   const FixedMenuLayout = () => (
     <div>
-      <Menu fixed='top' inverted>
-        <Container>
-          <Menu.Item as='a' header>
-            Stock Puppies
-          </Menu.Item>
-          <Menu.Item as='a'>Login</Menu.Item>
-        </Container>
-      </Menu>
-
+    
         <Container text style={{ marginTop: '4em' }}>
             <Header as='h1'>Your Portfolio</Header>
                         <p>Portflio performance over time</p>
@@ -38,32 +30,32 @@ import {
               <List link inverted>
                 <List.Item as='a'>
 
-                    <Button animated size="medium">
+                    <Button animated style={{width: 140, height: 45}} size="medium">
                         <Button.Content visible>Amazon</Button.Content>
-                        <Button.Content  hidden> <h5>AMZN</h5> </Button.Content>
+                        <Button.Content  hidden> <h5>AMZN | 1863.45</h5> </Button.Content>
                     </Button>
 
                 </List.Item>
                 <List.Item as='a'>
 
-                    <Button animated toggle >
+                    <Button animated style={{width: 140, height: 45}} toggle >
                         <Button.Content visible>Apple</Button.Content>
-                        <Button.Content hidden> AAPL </Button.Content>
+                        <Button.Content hidden> AAPL | 363.45</Button.Content>
                     </Button>
 
                 </List.Item>
                 <List.Item as='a'>
 
-                    <Button animated>
+                    <Button animated style={{width: 140, height: 45}}>
                         <Button.Content visible>Google</Button.Content>
-                        <Button.Content hidden> GOOG</Button.Content>
+                        <Button.Content hidden> GOOG | 1063.45</Button.Content>
                     </Button>
 
                 </List.Item>
 
                 <List.Item as='a'>
 
-                    <Button animated>
+                    <Button animated style={{width: 140, height: 45}}>
                         <Button.Content visible>Add Stock</Button.Content>
                         <Button.Content hidden> <Input style={{ marginLeft: '4px', marginBottom: '7px', color: "white"}} transparent placeholder='Ticker' /> </Button.Content>
                     </Button>
@@ -78,7 +70,7 @@ import {
                 <Header style={{ marginTop: '4em' }} inverted as='h4' content='Group 1' />
                 <List link inverted>
                     <List.Item as='a'>
-                        <Button animated>
+                        <Button animated style={{width: 140, height: 45}}>
                             <Button.Content visible>Split</Button.Content>
                             <Button.Content hidden> Sum </Button.Content>
                         </Button>
