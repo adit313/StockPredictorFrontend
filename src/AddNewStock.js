@@ -1,69 +1,59 @@
+import PropTypes from 'prop-types'
 import _ from 'lodash'
-import faker from 'faker'
 import React, { Component } from 'react'
-import { Search, Grid, Header, Segment } from 'semantic-ui-react'
+import { Search, Label, Card } from 'semantic-ui-react'
 
 const initialState = { isLoading: false, results: [], value: '' }
 
-const getResults = () =>
-  _.times(5, () => ({
-    title: faker.company.companyName(),
-    description: faker.company.catchPhrase(),
-    image: faker.internet.avatar(),
-    price: faker.finance.amount(0, 100, 2, '$'),
-  }))
+const resultRenderer = ({ stock }) => {
+  console.log(stock)
+return <Label content={stock} />
+}
 
-const source = _.range(0, 3).reduce((memo) => {
-  const name = faker.hacker.noun()
+resultRenderer.propTypes = {
+  name: PropTypes.string,
+  ticker: PropTypes.string,
+  exchange: PropTypes.string,
+}
 
-  // eslint-disable-next-line no-param-reassign
-  memo[name] = {
-    name,
-    results: getResults(),
+
+export default class SearchExampleStandard extends Component {
+  state = { 
+    isLoading: false, 
+    results: [], 
+    value: '' , 
+    source: []
   }
 
-  return memo
-}, {})
-
-export default class AddNewStock extends Component {
-  state = initialState
-
-  handleResultSelect = (e, { result }) => this.setState({ value: result.title })
-
+  componentDidMount() {
+    this.setState({source: this.props.stocks})
+  }
+  
+  handleResultSelect = (e, { result }) => {
+    console.log(result)
+    this.props.addStock(result)
+    this.setState({ value: "" })
+  }
   handleSearchChange = (e, { value }) => {
-    console.log(value)
     this.setState({ isLoading: true, value })
 
     setTimeout(() => {
       if (this.state.value.length < 1) return this.setState(initialState)
 
       const re = new RegExp(_.escapeRegExp(this.state.value), 'i')
-      const isMatch = (result) => re.test(result.title)
-
-      const filteredResults = _.reduce(
-        source,
-        (memo, data, name) => {
-          const results = _.filter(data.results, isMatch)
-          if (results.length) memo[name] = { name, results } // eslint-disable-line no-param-reassign
-
-          return memo
-        },
-        {},
-      )
+      const isMatch = (result) => re.test(result.ticker)
 
       this.setState({
         isLoading: false,
-        results: filteredResults,
+        results: _.filter(this.props.stocks, isMatch),
       })
     }, 300)
   }
 
   render() {
     const { isLoading, value, results } = this.state
-
     return (
           <Search
-            category
             loading={isLoading}
             onResultSelect={this.handleResultSelect}
             onSearchChange={_.debounce(this.handleSearchChange, 500, {
