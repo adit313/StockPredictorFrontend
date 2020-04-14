@@ -14,7 +14,8 @@ import {
       visible: false,
       stocks: [],
       displayStocks: [],
-      allStocks: []
+      allStocks: [],
+      stockData: []
     }
 
     componentDidMount() {
@@ -50,6 +51,11 @@ import {
         this.setState(prevState => ({
           stocks: [...(prevState.stocks || []), newStock]
           }));
+        fetch(`http://localhost:3000/stocks/${newStock.ticker}`)
+        .then(resp => resp.json())
+        .then(data=> this.setState(prevState => ({
+          stockData: [...(prevState.stockData || []), {ticker: newStock.ticker, prices: data.historical_data}]
+          })))
     }
     
     render() {
@@ -84,7 +90,7 @@ import {
                           </List>
                         </Grid.Column>
                         <Grid.Column width={12}>
-                                <Main stocks={this.state.stocks}/>
+                                <Main stockData={this.state.stockData}/>
                         </Grid.Column>
                         <Grid.Column width={1}>
                             <Header style={{ marginTop: '4em' }} inverted as='h4' content='Group 1' />

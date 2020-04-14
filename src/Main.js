@@ -1,6 +1,7 @@
 import React from 'react';
 import * as V from 'victory';
 import { VictoryLine, VictoryChart, VictoryAxis, VictoryTheme }from 'victory';
+import { updateStatement } from 'typescript';
 
 
 
@@ -18,7 +19,8 @@ export default class Main extends React.Component {
       {quarter: 2, earnings: 16500},
       {quarter: 3, earnings: 14250},
       {quarter: 4, earnings: 19000}
-    ]
+    ],
+    stockData: []
   }
 
   changeState = () => {
@@ -30,32 +32,33 @@ export default class Main extends React.Component {
     ]})
   }
 
-  fetchStockData = async (stock) => {
-    let response = await fetch(`http://localhost:3000/stocks/${stock.ticker}`)
-    let stockData = await response.json()
-    return stockData
-  }
+  // fetchStockData = async (stock) => {
+  //   let response = await fetch(`http://localhost:3000/stocks/${stock.ticker}`)
+  //   let stockData = await response.json()
+  //   return stockData
+  // }
 
-  renderSingleStock = (stock) =>{
-    let stockData = this.fetchStockData(stock)
-    return(
-      <VictoryLine 
-                data={stockData.historical_data} 
-                x={"date"} 
-                y={"price"}/>
-    )
-  }
+  // renderSingleStock = async (stock) =>{
+  //   let stockData = await this.fetchStockData(stock)
+  //   return(
+  //     <VictoryLine 
+  //               data={stockData.historical_data} 
+  //               x={"date"} 
+  //               y={"price"}/>
+  //   )
+  // }
 
   renderStocks = () => {
-    let result = []
-    if (this.props.stocks) {
-      this.props.stocks.forEach(element => {
-        return result.push(this.renderSingleStock(element))
+      return this.props.stockData.map(stock => {
+        return (
+                <VictoryLine 
+                data={stock.prices}
+                name={stock.ticker}
+                x={"date"} 
+                y={"price"}/>
+        )
       })
     }
-    console.log(result)
-    return result
-  }
 
   render() {
     console.log(this.props)
@@ -76,7 +79,7 @@ export default class Main extends React.Component {
               // tickFormat specifies how ticks should be displayed
               tickFormat={(x) => (`$${x / 1000}k`)}
             />
-              {this.props.stocks ? this.renderStocks() : null}
+              {this.props.stockData ? this.renderStocks() : null}
         </VictoryChart>
         <br/>
         <br/>
