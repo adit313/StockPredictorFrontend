@@ -54,7 +54,9 @@ import {
         fetch(`http://localhost:3000/stocks/${newStock.ticker}`)
         .then(resp => resp.json())
         .then(data=> this.setState(prevState => ({
-          stockData: [...(prevState.stockData || []), {ticker: newStock.ticker, prices: data.historical_data}]
+          stockData: [...(prevState.stockData || []), {ticker: newStock.ticker, prices: data.historical_data.filter(function (value, index, ar) {
+            return (index % 10 === 0 && Date.parse(value.date) > Date.parse("2010-01-01"));
+        } )}]
           })))
     }
     
@@ -69,7 +71,7 @@ import {
                     </Container>
               
                   <Container fluid style={{ marginTop: '0em' }}>
-                  <Grid divided inverted stackable>
+                  <Grid divided centered inverted stackable>
                         <Grid.Column width={2}>
                           <Header style={{ marginTop: '4em' }} inverted as='h4' content='Group 1' />
 

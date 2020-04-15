@@ -1,57 +1,36 @@
 import React from 'react';
 import * as V from 'victory';
-import { VictoryLine, VictoryChart, VictoryAxis, VictoryTheme }from 'victory';
+import { VictoryLine, VictoryChart, VictoryAxis, VictoryZoomContainer, VictoryBrushContainer,VictoryTooltip }from 'victory';
 import { updateStatement } from 'typescript';
 
 
 
 export default class Main extends React.Component {
 
-  state={
-    data: [
-      {quarter: 1, earnings: 13000},
-      {quarter: 2, earnings: 16500},
-      {quarter: 3, earnings: 14250},
-      {quarter: 4, earnings: 19000}
-    ],
-    data2: [
-      {quarter: 1, earnings: 13000},
-      {quarter: 2, earnings: 16500},
-      {quarter: 3, earnings: 14250},
-      {quarter: 4, earnings: 19000}
-    ],
-    stockData: []
+  constructor() {
+    super();
+    this.state = {};
   }
 
-  changeState = () => {
-    this.setState({data: [
-      {quarter: 1, earnings: 30000*Math.random()},
-      {quarter: 2, earnings: 30000*Math.random()},
-      {quarter: 3, earnings: 30000*Math.random()},
-      {quarter: 4, earnings: 30000*Math.random()}
-    ]})
+  handleZoom(domain) {
+    this.setState({selectedDomain: domain});
   }
 
-  // fetchStockData = async (stock) => {
-  //   let response = await fetch(`http://localhost:3000/stocks/${stock.ticker}`)
-  //   let stockData = await response.json()
-  //   return stockData
-  // }
-
-  // renderSingleStock = async (stock) =>{
-  //   let stockData = await this.fetchStockData(stock)
-  //   return(
-  //     <VictoryLine 
-  //               data={stockData.historical_data} 
-  //               x={"date"} 
-  //               y={"price"}/>
-  //   )
-  // }
+  handleBrush(domain) {
+    this.setState({zoomDomain: domain});
+  }
 
   renderStocks = () => {
+    this.props.stockData.forEach(stock => {
+      stock.prices.forEach(line => {
+        line.date = new Date(line.date)
+      })
+    })
       return this.props.stockData.map(stock => {
         return (
                 <VictoryLine 
+                labels={() => stock.ticker}
+                labelComponent={<VictoryTooltip/>}
                 data={stock.prices}
                 name={stock.ticker}
                 x={"date"} 
@@ -61,33 +40,51 @@ export default class Main extends React.Component {
     }
 
   render() {
-    console.log(this.props)
-    return (
-      <div className="Chart">
-        <VictoryChart 
-        width={700}
-        height = {'400'}
-        animate={{ duration: 500}}
-        theme={VictoryTheme.material}
-          domainPadding= {30} >
-            <VictoryAxis
-              // tickValues specifies both the number of ticks and where
-              // they are placed on the axis
-            />
-            <VictoryAxis
-              dependentAxis
-              // tickFormat specifies how ticks should be displayed
-              tickFormat={(x) => (`$${x / 1000}k`)}
-            />
-              {this.props.stockData ? this.renderStocks() : null}
-        </VictoryChart>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <button icon="like" onClick={this.changeState}>Change</button>
-      </div>
+    this.props.stockData[0]? console.log(typeof this.props.stockData[0].prices[0].date) : console.log("blah")
+    return (        
+    <div>
+      <VictoryChart width={1000} height={500} scale={{x: "time"}} animate={{ duration: 500}}
+        containerComponent={
+          <VictoryZoomContainer responsive={false}
+            zoomDimension="x"
+            zoomDomain={this.state.zoomDomain}
+            onZoomDomainChange={this.handleZoom.bind(this)}
+          />
+        }
+      >
+        {this.renderStocks()}
+
+      </VictoryChart>
+
+      <VictoryChart
+        padding={{top: 0, left: 50, right: 50, bottom: 30}}
+        animate={{ duration: 2000}}
+        width={1000} height={90} scale={{x: "time"}}
+        containerComponent={
+          <VictoryBrushContainer responsive={false}
+            brushDimension="x"
+            brushDomain={this.state.selectedDomain}
+            onBrushDomainChange={this.handleBrush.bind(this)}
+          />
+        }
+      >
+        <VictoryAxis
+          tickValues={[
+            // new Date(1985, 1, 1),
+            // new Date(1990, 1, 1),
+            // new Date(1995, 1, 1),
+            // new Date(2000, 1, 1),
+            // new Date(2005, 1, 1),
+            new Date(2010, 1, 1),
+            new Date(2015, 1, 1),
+            new Date(2020, 1, 1)
+          ]}
+          tickFormat={(x) => new Date(x).getFullYear()}
+        />
+        {this.renderStocks()}
+      </VictoryChart>
+  </div>
+
     );
   }
 }
