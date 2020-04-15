@@ -39,6 +39,26 @@ export default class Main extends React.Component {
       })
     }
 
+    renderPredictions = () => {
+      this.props.stockData.forEach(stock => {
+        stock.predictedPrices.forEach(line => {
+          line.date = new Date(line.date)
+        })
+      })
+        return this.props.stockData.map(stock => {
+          return (
+                  <VictoryLine 
+                  style={{ data: { stroke: 'red', strokeDasharray: [1, 2] } }} 
+                  labels={() => stock.ticker}
+                  labelComponent={<VictoryTooltip/>}
+                  data={stock.predictedPrices}
+                  name={stock.ticker}
+                  x={"date"} 
+                  y={"price"}/>
+          )
+        })
+      }
+
   render() {
     this.props.stockData[0]? console.log(typeof this.props.stockData[0].prices[0].date) : console.log("blah")
     return (        
@@ -53,6 +73,7 @@ export default class Main extends React.Component {
         }
       >
         {this.renderStocks()}
+        {this.renderPredictions()}
 
       </VictoryChart>
 
@@ -82,6 +103,7 @@ export default class Main extends React.Component {
           tickFormat={(x) => new Date(x).getFullYear()}
         />
         {this.renderStocks()}
+        {this.renderPredictions()}
       </VictoryChart>
   </div>
 

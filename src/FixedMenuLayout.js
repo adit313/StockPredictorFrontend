@@ -68,7 +68,8 @@ import {
         .then(data=> this.setState(prevState => ({
           stockData: [...(prevState.stockData || []), {ticker: newStock.ticker, prices: data.historical_data.filter(function (value, index, ar) {
             return (index % 10 === 0 && Date.parse(value.date) > Date.parse("2015-01-01"));
-           })}]
+           }), predictedPrices: data.prediction_data.predicted_prices
+          }]
           })))
     }
     
@@ -83,9 +84,8 @@ import {
                     </Container>
               
                   <Container fluid style={{ margin: '0em' }}>
-                  <Grid divided centered inverted stackable>
+                  <Grid divided centered>
                         <Grid.Column width={2}>
-
                           <List link inverted>
                             {this.renderStocks()}
                             <List.Item as='a'>
@@ -96,7 +96,6 @@ import {
                             </List.Item>
                             
                             <List.Item as='a'>
-                              <AddNewStock addStock={this.addToStocks} stocks={this.passStocksForSearch()}/>
                             </List.Item>
                           </List>
                         </Grid.Column>
@@ -112,7 +111,9 @@ import {
                         </Grid.Column>
                       </Grid>
                   </Container>
-
+                  <Container centered style={{ margin: '3em' }}>
+                       <AddNewStock addStock={this.addToStocks} stocks={this.passStocksForSearch()}/>
+                  </Container>
 
                 </div>
               )  
