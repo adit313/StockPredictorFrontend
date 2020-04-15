@@ -75,7 +75,7 @@ export default class Main extends React.Component {
             // new Date(1995, 1, 1),
             // new Date(2000, 1, 1),
             // new Date(2005, 1, 1),
-            new Date(2010, 1, 1),
+            // new Date(2010, 1, 1),
             new Date(2015, 1, 1),
             new Date(2020, 1, 1)
           ]}

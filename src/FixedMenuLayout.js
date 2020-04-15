@@ -4,10 +4,12 @@ import {
     Container,
     Grid,
     Header,
-    List
+    List,
+    Card
   } from 'semantic-ui-react'
   import Main from './Main.js'
   import AddNewStock from './AddNewStock.js'
+  import StockCard from './StockCard.js'
   
   export default class FixedMenuLayout extends React.Component{
     state = {
@@ -33,6 +35,16 @@ import {
       }
       return searchStocks
     }
+
+    renderCards = () => {
+      return this.state.stocks.map(element => {
+        return (
+          <List.Item as='a'>
+            <StockCard stock={element}/>
+          </List.Item>
+        )
+      })
+    }
     
     renderStocks = () => {
       return this.state.stocks.map(element => {
@@ -55,8 +67,8 @@ import {
         .then(resp => resp.json())
         .then(data=> this.setState(prevState => ({
           stockData: [...(prevState.stockData || []), {ticker: newStock.ticker, prices: data.historical_data.filter(function (value, index, ar) {
-            return (index % 10 === 0 && Date.parse(value.date) > Date.parse("2010-01-01"));
-        } )}]
+            return (index % 10 === 0 && Date.parse(value.date) > Date.parse("2015-01-01"));
+           })}]
           })))
     }
     
@@ -70,15 +82,12 @@ import {
                                     <p>Portflio performance over time</p>
                     </Container>
               
-                  <Container fluid style={{ marginTop: '0em' }}>
+                  <Container fluid style={{ margin: '0em' }}>
                   <Grid divided centered inverted stackable>
                         <Grid.Column width={2}>
-                          <Header style={{ marginTop: '4em' }} inverted as='h4' content='Group 1' />
 
                           <List link inverted>
-
                             {this.renderStocks()}
-
                             <List.Item as='a'>
                                 <Button animated style={{width: 140, height: 45}}>
                                     <Button.Content visible>Add Stock</Button.Content>
@@ -91,18 +100,14 @@ import {
                             </List.Item>
                           </List>
                         </Grid.Column>
-                        <Grid.Column width={12}>
+                        <Grid.Column width={11}>
                                 <Main stockData={this.state.stockData}/>
                         </Grid.Column>
-                        <Grid.Column width={1}>
-                            <Header style={{ marginTop: '4em' }} inverted as='h4' content='Group 1' />
+                        <Grid.Column width={3}>
                             <List link inverted>
-                                <List.Item as='a'>
-                                    <Button animated style={{width: 140, height: 45}}>
-                                        <Button.Content visible>Split</Button.Content>
-                                        <Button.Content hidden> Sum </Button.Content>
-                                    </Button>
-                                </List.Item>
+                              <Card.Group centered> 
+                                {this.renderCards()}
+                              </Card.Group>
                             </List>
                         </Grid.Column>
                       </Grid>
