@@ -39,7 +39,7 @@ export default class StockCard extends React.Component {
             return null
         } else {
             return( 
-                <Card>
+                <Card href={`https://www.sec.gov/cgi-bin/browse-edgar?CIK=${this.props.stock.ticker}&Find=Search&owner=exclude&action=getcompany`} target="_blank">
                     <Card.Content>
                         <Image
                         floated='right'

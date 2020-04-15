@@ -63,7 +63,7 @@ export default class Main extends React.Component {
     this.props.stockData[0]? console.log(typeof this.props.stockData[0].prices[0].date) : console.log("blah")
     return (        
     <div>
-      <VictoryChart width={1000} height={500} scale={{x: "time"}} animate={{ duration: 500}}
+      <VictoryChart width={1075} height={500} scale={{x: "time"}} animate={{ duration: 500}}
         containerComponent={
           <VictoryZoomContainer responsive={false}
             zoomDimension="x"
@@ -80,7 +80,7 @@ export default class Main extends React.Component {
       <VictoryChart
         padding={{top: 0, left: 50, right: 50, bottom: 30}}
         animate={{ duration: 2000}}
-        width={1000} height={90} scale={{x: "time"}}
+        width={1075} height={90} scale={{x: "time"}}
         containerComponent={
           <VictoryBrushContainer responsive={false}
             brushDimension="x"

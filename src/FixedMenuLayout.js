@@ -50,7 +50,7 @@ import {
       return this.state.stocks.map(element => {
         return (
           <List.Item as='a'>
-           <Button animated style={{width: 140, height: 45}} size="medium">
+           <Button animated style={{width: 180, height: 45}} size="medium">
              <Button.Content visible>{element.name}</Button.Content>
              <Button.Content  hidden> <h5>{element.ticker}|{element.exchange}</h5> </Button.Content>
            </Button>
@@ -89,7 +89,7 @@ import {
                           <List link inverted>
                             {this.renderStocks()}
                             <List.Item as='a'>
-                                <Button animated style={{width: 140, height: 45}}>
+                                <Button animated style={{width: 180, height: 45}}>
                                     <Button.Content visible>Add Stock</Button.Content>
                                     <Button.Content hidden> Add by Ticker </Button.Content>
                                 </Button>
