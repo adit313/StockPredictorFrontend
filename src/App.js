@@ -2,18 +2,8 @@ import React from 'react';
 import './App.css';
 
 import {
-  Button,
   Container,
-  Divider,
-  Dropdown,
-  Grid,
-  Header,
-  Image,
-  Icon,
-  Input,
-  List,
   Menu,
-  Segment,
 } from 'semantic-ui-react'
 
 import {

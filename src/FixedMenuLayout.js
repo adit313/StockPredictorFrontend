@@ -5,7 +5,9 @@ import {
     Grid,
     Header,
     List,
-    Card
+    Card,
+    Modal,
+    Image,
   } from 'semantic-ui-react'
   import Main from './Main.js'
   import AddNewStock from './AddNewStock.js'
@@ -45,6 +47,10 @@ import {
         )
       })
     }
+
+    addToStockData = (ticker) => {
+      
+    }
     
     renderStocks = () => {
       return this.state.stocks.map(element => {
@@ -58,6 +64,17 @@ import {
         )
       })
     }
+
+    renderStockList = () => {
+      return this.state.stocks.map(element => {
+        return (
+          <List.Item as='a'>
+            {element.name} | {element.ticker} | {element.exchange}
+          </List.Item>
+        )
+      })
+    }
+
 
     addToStocks = (newStock) => {
         this.setState(prevState => ({
@@ -74,7 +91,7 @@ import {
     }
     
     render() {
-      console.log(this.state)
+      console.log(this.state.stockData.length)
 
       return (
                 <div>
@@ -89,10 +106,31 @@ import {
                           <List link inverted>
                             {this.renderStocks()}
                             <List.Item as='a'>
-                                <Button animated style={{width: 180, height: 45}}>
-                                    <Button.Content visible>Add Stock</Button.Content>
-                                    <Button.Content hidden> Add by Ticker </Button.Content>
-                                </Button>
+                            <Modal trigger={
+                                <Button animated style={{width: 180, height: 45}} size="medium">
+                                  <Button.Content visible>Add New Stock</Button.Content>
+                                  <Button.Content  hidden> <h5>Add By Ticker</h5> </Button.Content>
+                              </Button>
+                            }
+                            closeIcon
+                            >
+                                <Modal.Header>Add New Stocks to Track</Modal.Header>
+                                <Modal.Content image>
+                                  <Image wrapped size='medium' src='https://static.wixstatic.com/media/f6761e_a4706da9b4474d0f9b7dcbc0e028ff92~mv2.png/v1/fill/w_481,h_551,al_c,q_85,usm_0.66_1.00_0.01/Marketplace%20Investor%20Side.webp' />
+                                  <Modal.Description>
+                                    <Header>Add Stock by Ticker</Header>
+                                    <p>
+                                      We have over 8,000 stocks in our database, covering the entirety of the NASDAQ and NYSE, feel free to search thorugh by Ticker Symbol.
+                                    </p>
+                                    <p><AddNewStock addStock={this.addToStocks} stocks={this.passStocksForSearch()}/></p>
+                                    <p>
+                                      <List>
+                                        {this.renderStockList()}  
+                                      </List>  
+                                    </p>
+                                  </Modal.Description>
+                                </Modal.Content>
+                              </Modal>
                             </List.Item>
                             
                             <List.Item as='a'>
@@ -100,7 +138,7 @@ import {
                           </List>
                         </Grid.Column>
                         <Grid.Column width={11}>
-                                <Main stockData={this.state.stockData}/>
+                                {this.state.stockData.length === 0 ? null : <Main stockData={this.state.stockData}/>}
                         </Grid.Column>
                         <Grid.Column width={3}>
                             <List link inverted>
@@ -111,10 +149,6 @@ import {
                         </Grid.Column>
                       </Grid>
                   </Container>
-                  <Container centered style={{ margin: '3em' }}>
-                       <AddNewStock addStock={this.addToStocks} stocks={this.passStocksForSearch()}/>
-                  </Container>
-
                 </div>
               )  
       }
